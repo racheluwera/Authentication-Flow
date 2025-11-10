@@ -1,34 +1,26 @@
-"use client";
-import React, { createContext, useEffect, useState, useContext } from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "./lib/firebase";
+import "./globals.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import AuthProvider from "./components/authProvider";
+//import AuthProvider from "../components/AuthProvider"; // ✅ your client-side provider
 
+const inter = Inter({ subsets: ["latin"] });
 
-type AuthContextType = { user: User | null; loading: boolean };
-const AuthContext = createContext<AuthContextType>({ user: null, loading: true });
+export const metadata: Metadata = {
+  title: "My App",
+  description: "Next.js App with Firebase Auth",
+};
 
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
-
-// ✅ THIS COMPONENT MUST RETURN JSX
-export default function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (u) => {
-      setUser(u);
-      setLoading(false);
-    });
-    return () => unsub();
-  }, []);
-
-
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <AuthContext.Provider value={{ user, loading }}>
-      {children}
-    </AuthContext.Provider>
+    <html lang="en">
+      <body className={inter.className}>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
+    </html>
   );
 }
