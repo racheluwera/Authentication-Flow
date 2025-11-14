@@ -1,37 +1,46 @@
 
-"use client";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../lib/firebase";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+'use client'
+import { useState } from 'react'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../lib/firebase'
+import { useRouter } from 'next/navigation' // App Router
+
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [err, setErr] = useState("");
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const router = useRouter()
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setErr("");
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push("/"); 
+      await signInWithEmailAndPassword(auth, email, password)
+      alert('Logged in successfully!')
+      router.push('/') // redirect after login
     } catch (error) {
-        console.log("Login failed");
-    
+        console.log(error);
+      
     }
   }
 
+
   return (
-    <main className="min-h-screen flex items-center justify-center p-4">
-      <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
-        <h1 className="text-2xl font-bold">Login</h1>
-        <input required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="input" />
-        <input required type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="input" />
-        <button className="btn" type="submit">Login</button>
-        {err && <p className="text-red-500">{err}</p>}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <h1 className="text-xl font-bold mb-4">Login</h1>
+      <form onSubmit={handleLogin} className="space-y-4 w-64">
+        <input type="email" placeholder="Email" className="w-full border p-2" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input type="password" placeholder="Password" className="w-full border p-2" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <button className="w-full bg-blue-500 text-white p-2 rounded" type="submit">Login</button>
       </form>
-    </main>
-  );
+      <button
+        className="mt-4 text-sm text-blue-600"
+        onClick={() => router.push('/register')} // redirect to register page
+      >
+        Do not have an account? Register
+      </button>
+    </div>
+  )
 }
+
+

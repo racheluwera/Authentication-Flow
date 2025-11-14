@@ -1,10 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import AuthProvider from "./components/authProvider";
-//import AuthProvider from "../components/AuthProvider"; // ✅ your client-side provider
+import DashboardPage from "./components/dashboardPage";
 
-const inter = Inter({ subsets: ["latin"] });
+
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "My App",
@@ -18,7 +18,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="">
+        <DashboardPage />
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

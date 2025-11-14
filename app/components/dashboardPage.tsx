@@ -2,10 +2,10 @@
 "use client";
 
 import React, { useState } from "react";
-import AuthGate from "../components/AutGates";
-import { useAuth } from "../components/authProvider"
-import TaskForm from "../components/TaskForm";
-import TaskList from "../components/TaskList";
+import AuthGate from "./AutGates";
+import { useAuth } from "./authProvider"
+import TaskForm from "./TaskForm";
+import TaskList from "./TaskList";
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
 // import { Task } from "../api/task/[id]/route";
