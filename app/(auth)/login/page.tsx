@@ -1,7 +1,7 @@
 
 'use client'
 import { useState } from 'react'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword, AuthError } from 'firebase/auth'
 import { auth } from '../../lib/firebase'
 import { useRouter } from 'next/navigation' // App Router
 
@@ -14,13 +14,23 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Debug: Check if email/password are not empty
+    console.log('Login attempt:', { email, password: password ? '***' : 'empty' })
+    
+    if (!email || !password) {
+      alert('Please enter both email and password')
+      return
+    }
+    
     try {
       await signInWithEmailAndPassword(auth, email, password)
       alert('Logged in successfully!')
-      router.push('/') // redirect after login
+      router.push('/dashboard') // redirect after login
     } catch (error) {
-        console.log(error);
-      
+      const authError = error as AuthError
+      console.error('Login error:', authError)
+      alert(`Login failed: ${authError.message}`)
     }
   }
 

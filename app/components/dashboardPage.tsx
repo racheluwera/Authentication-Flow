@@ -19,21 +19,51 @@ export default function DashboardPage() {
 
   return (
     <AuthGate>
-      <main>
-        <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <h1>Hello, {user?.email}</h1>
-          <button onClick={() => signOut(auth).then(() => window.location.href = "/login")}>Logout</button>
+      <div className="min-h-screen bg-gray-50">
+        {/* Header */}
+        <header className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-4">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Task Manager</h1>
+                <p className="text-sm text-gray-600">Welcome back, {user?.email}</p>
+              </div>
+              <button 
+                onClick={() => signOut(auth).then(() => window.location.href = "/login")}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
         </header>
 
-        <section style={{ marginTop: 20 }}>
-          <h2>{editing ? "Edit Task" : "Add Task"}</h2>
-          <TaskForm editingTask={editing} onSaved={onSaved} />
-        </section>
+        {/* Main Content */}
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Task Form */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                {editing ? "Edit Task" : "Add New Task"}
+              </h2>
+              <TaskForm key={editing?.id || 'new'} editingTask={editing} onSaved={onSaved} />
+              {editing && (
+                <button 
+                  onClick={() => setEditing(null)}
+                  className="mt-4 text-gray-600 hover:text-gray-800 text-sm"
+                >
+                  Cancel editing
+                </button>
+              )}
+            </div>
 
-        <section style={{ marginTop: 20 }}>
-          <TaskList onEdit={(t) => setEditing(t)} />
-        </section>
-      </main>
+            {/* Task List */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <TaskList onEdit={(t) => setEditing(t)} />
+            </div>
+          </div>
+        </main>
+      </div>
     </AuthGate>
   );
 }

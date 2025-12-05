@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, AuthError } from 'firebase/auth'
 import { auth } from '../../lib/firebase'
 import { useRouter } from 'next/navigation'
 
@@ -14,13 +14,34 @@ export default function RegisterPage() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!email || !password) {
+      alert('Please enter both email and password')
+      return
+    }
+    
+    if (password.length < 6) {
+      alert('Password must be at least 6 characters long')
+      return
+    }
+    
     try {
       await createUserWithEmailAndPassword(auth, email, password)
       alert('Account created successfully!')
       router.push('/login') // redirect to login after signup
     } catch (error) {
-        console.log(error);
+      const authError = error as AuthError
+      console.error('Registration error:', authError)
       
+      if (authError.code === 'auth/email-already-in-use') {
+        alert('This email is already registered. Please use a different email or try logging in.')
+      } else if (authError.code === 'auth/weak-password') {
+        alert('Password is too weak. Please use a stronger password.')
+      } else if (authError.code === 'auth/invalid-email') {
+        alert('Please enter a valid email address.')
+      } else {
+        alert(`Registration failed: ${authError.message}`)
+      }
     }
   }
 
