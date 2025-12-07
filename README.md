@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TaskManager
 
-## Getting Started
+A modern, full-stack task management application built with Next.js 16, Firebase, and TypeScript. Features secure authentication, real-time updates, and an intuitive user interface.
 
-First, run the development server:
+## Features
 
+- **User Authentication** - Secure email/password authentication with Firebase Auth
+- **Task Management** - Create, edit, delete, and mark tasks as complete
+- **Real-time Updates** - Instant synchronization across all devices using Firestore
+- **Priority Levels** - Organize tasks by Low, Medium, or High priority
+- **Due Dates** - Set and track task deadlines
+- **Responsive Design** - Fully responsive UI built with Tailwind CSS
+- **Protected Routes** - Secure dashboard with authentication gates
+
+## Tech Stack
+
+- **Framework:** Next.js 16.0.7 (App Router)
+- **Language:** TypeScript
+- **Authentication:** Firebase Authentication
+- **Database:** Cloud Firestore
+- **Styling:** Tailwind CSS 4
+- **Runtime:** Node.js 22+
+
+## Prerequisites
+
+- Node.js 22.20.0 or higher
+- npm 10.9.3 or higher
+- Firebase project with Authentication and Firestore enabled
+
+## Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd Authentication
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Configure Firebase:
+   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+   - Enable Email/Password authentication
+   - Create a Firestore database
+   - Update `app/lib/firebase.ts` with your Firebase configuration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run the development server:
+```bash
+npm run dev
+```
 
-## Learn More
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+Authentication/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/          # Login page
+│   │   └── register/       # Registration page
+│   ├── api/
+│   │   └── task/           # Task API routes
+│   ├── components/
+│   │   ├── AuthGate.tsx    # Protected route wrapper
+│   │   ├── authProvider.tsx # Auth context provider
+│   │   ├── dashboardPage.tsx
+│   │   ├── TaskForm.tsx    # Task creation/editing form
+│   │   └── TaskList.tsx    # Task list display
+│   ├── dashboard/          # Dashboard page
+│   ├── lib/
+│   │   └── firebase.ts     # Firebase configuration
+│   ├── types/
+│   │   └── task.ts         # TypeScript types
+│   └── page.tsx            # Home page
+├── public/                 # Static assets
+└── package.json
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Available Scripts
 
-## Deploy on Vercel
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Vercel (Recommended)
+
+
+1. Deployment link:https://authentication-flow-ohqp.vercel.app/
+
+## Security
+
+- Firebase Authentication for secure user management
+- Protected API routes with user validation
+- Environment variables for sensitive configuration
+- Regular dependency updates for security patches
+
+
+## Support
+
+For issues and questions, please open an issue in the repository.
