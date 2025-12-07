@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from "react";
-import AuthGate from "./AutGates";
+import AuthGate from "./AuthGate";
 import { useAuth } from "./authProvider"
 import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
