@@ -60,7 +60,7 @@ export default function Home() {
             <div className="space-y-4">
               <p className="text-lg text-gray-700">Welcome back, {user.email}!</p>
               <Link 
-                href="/login" 
+                href="/dashboard" 
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors"
               >
                 Go to Dashboard

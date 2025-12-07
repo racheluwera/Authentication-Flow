@@ -3,7 +3,7 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
 
-export async function PUT (req:Request,context: {params: {id: string}}){
+export async function PUT (req:Request,context: {params: Promise<{id: string}>}){
     try{
         const {id} = await context.params;
         if(!id){
@@ -23,7 +23,7 @@ export async function PUT (req:Request,context: {params: {id: string}}){
         return NextResponse.json({error:"Failed to update task"},{ status:500});
     }
 }
-export async function DELETE(REQ:Request, context:{params: {id: string}}){
+export async function DELETE(REQ:Request, context:{params: Promise<{id: string}>}){
     try{
     const {id} = await context.params;
     if (!id){
